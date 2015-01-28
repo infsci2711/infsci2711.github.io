@@ -172,6 +172,62 @@ public class TutorialServer {
 }
 {% endhighlight %}
 
+What the above code will is following:
+
+* create an instance of *JerseyJettyServer* class that is defined in the Utils project. The *JerseyJettyServer* starts an embedded Jetty server that listens on the provided port (7654) and will look for the REST API classes in the *edu.pitt.sis.infsci2711.tutorial.rest* package (we will create a demo API later)
+
+* starts the server with *server.start()*
+
+Before we start our TutorialServer, let's add a demo API first. Edit the *DemoRestApi.java* file like this:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.rest;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+@Path("Demo/")
+public class DemoRestApi {
+	
+	@Path("helloWorld")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response helloWorld() {
+		return Response.status(200).entity("{\"msg\" : \"Hello World\"}").build();
+	}
+}
+{% endhighlight %}
+
+In short the code above defines a root resource accesible with path "Demo" and a sub-resource accesible with path "helloWord" whic his relative to the root path. The sub resource also annoted with @GET that designates that the resource is hoing to process HTTP GET requests and produce representation in JSON format. For more details please read [Jersey docs](https://jersey.java.net/documentation/latest/index.html) and especially [Chapter 3](https://jersey.java.net/documentation/latest/jaxrs-resources.html).
+
+Now we can finally try to run our TutorialServer: right click on the *TutorialServer.java* in the *Project Explorer* and select *Run As -> Java Application*.
+
+You should see similar output in the console tab:
+
+{% highlight xml %}
+2015-01-28 15:46:55.698:INFO::main: Logging initialized @740ms
+2015-01-28 15:46:55.794:INFO:oejs.Server:main: jetty-9.2.3.v20140905
+2015-01-28 15:46:55.843:INFO:oejsh.ContextHandler:main: Started o.e.j.s.ServletContextHandler@1de61363{/,null,AVAILABLE}
+2015-01-28 15:46:55.867:INFO:oejs.ServerConnector:main: Started ServerConnector@67cd12fc{HTTP/1.1}{0.0.0.0:7654}
+2015-01-28 15:46:55.867:INFO:oejs.Server:main: Started @912ms
+{% endhighlight %}
+
+To test the server, open a browser of your choice and type this url (port number might be different if you provided different value):
+
+{% highlight xml %}
+http://localhost:7654/Demo/helloWorld
+{% endhighlight %}
+
+In response you should see:
+{% highlight xml %}
+{"msg" : "Hello World"}
+{% endhighlight %}
+
+
+
 [Jersey]:	https://jersey.java.net/
 [Jetty]:	http://eclipse.org/jetty/
 [Maven]:	http://maven.apache.org/
