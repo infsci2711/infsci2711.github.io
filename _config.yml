@@ -1,14 +1,13 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
+title: INFSCI 2711 Advanced Topics in Database Management
+email: karataev.evgeny@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  The website for the INFSCI 2711 Advanced Topics in Database Management class
+  at School of Information Sciences at Univeristy of Pittsburgh.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "http://infsci2711.github.io/" # the base hostname & protocol for your site
+twitter_username: KarataevEvgeny
+github_username:  EvgenyKarataev
 
 # Build settings
 markdown: kramdown
