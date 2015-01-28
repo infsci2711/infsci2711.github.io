@@ -112,9 +112,65 @@ If everything worked correctly you should see a message in terminal or in consol
 [INFO] ------------------------------------------
 {% endhighlight %}
 
-### Step 6: Add *MultiDBs-Utils* as maven dependecny to api project
+### Step 6: Add *MultiDBs-Utils* and *tutorialserver* as maven dependecny to *tutorialserverapi* project
 
-Open *pom.xml* file in the *rutorialseverapi
+* Open *pom.xml* file in the *rutorialseverapi
+* Find `<dependencies>` tag
+* Add following two dependencies:
+
+{% highlight xml %}
+<dependency>
+	<groupId>edu.pitt.sis.infsci2711</groupId>
+	<artifactId>multidbsutils</artifactId>
+	<version>0.1-SNAPSHOT</version>
+</dependency>
+
+<dependency>
+	<groupId>edu.pitt.sis.infsci2711</groupId>
+	<artifactId>tutorialserver</artifactId>
+	<version>0.1-SNAPSHOT</version>
+</dependency>
+{% endhighlight %}
+
+The first dependency is to the *MultiDBs-Utils* project since we need to use some classes from that project and the second dependency is to the *tutorialserver* project since that project will do all the work and the *tutorialserverapi* project will "forward" all request to it.
+
+### Step 7: Demo RESTful API call
+
+Let's work on the *tutorialserverapi* project first. 
+
+Right click on the *src/main/java* in the Project Explorer and select *New -> Package* to create a new package. In the *New Java Package* dialog enter the name of the new package as *edu.pitt.sis.infsci2711.tutorial*. 
+
+---
+
+**NOTE**: all packages in your projects should have *edu.pitt.sis.infsci2711.multidbs.* prefix followed by your project name. E.g., all packages in the *MultiDBs-FilesAPIs2DBs* project should have this beginning: *edu.pitt.sis.infsci2711.multidbs.filesapis2dbs*
+
+---
+<br/>
+After you added the package, right click on it in the *Project Explorer* and select *New -> Class*. In the *New Java Class* dialog enter name for the new class as *TutorialServer*.
+
+Do similar steps to add *edu.pitt.sis.infsci2711.tutorial.rest* package and *DemoRestApi* class in that package.
+
+You should have project structure like this:
+
+![API project with 2 packages and 2 classes](/images/apiprojectWith2Pack2Classes.png)
+
+#### Step 7.1: Starting Jetty Server
+
+Edit *TutorialServer.java* file to make it like this:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial;
+
+import edu.pitt.sis.infsci2711.multidbs.utils.JerseyJettyServer;
+
+public class TutorialServer {
+	
+	public static void main(final String[] args) throws Exception {
+		JerseyJettyServer server = new JerseyJettyServer(7654, "edu.pitt.sis.infsci2711.tutorial.rest");
+		server.start();
+	}
+}
+{% endhighlight %}
 
 [Jersey]:	https://jersey.java.net/
 [Jetty]:	http://eclipse.org/jetty/
