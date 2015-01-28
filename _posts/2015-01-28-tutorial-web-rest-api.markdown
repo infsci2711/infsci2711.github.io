@@ -154,8 +154,6 @@ You should have project structure like this:
 
 ![API project with 2 packages and 2 classes](/images/apiprojectWith2Pack2Classes.png)
 
-#### Step 7.1: Starting Jetty Server
-
 Edit *TutorialServer.java* file to make it like this:
 
 {% highlight java %}
@@ -225,6 +223,451 @@ In response you should see:
 {% highlight xml %}
 {"msg" : "Hello World"}
 {% endhighlight %}
+
+### Step 8: Person RESTful API Example
+
+Now let's do something more difficult and create simple business logic for CRUD operations on Persons. For that create the following four packages with one class in each of them in the *tutorialserver* project (not the API project):
+
+* edu.pitt.sis.infsci2711.tutorial.business
+  * PersonService.java
+
+* edu.pitt.sis.infsci2711.tutorial.dao
+  * PersonDAO.java
+
+* edu.pitt.sis.infsci2711.tutorial.models
+  * PersonDBModel.java
+
+* edu.pitt.sis.infsci2711.tutorial.utils
+  * JdbcUtil.java
+
+The project should look like this in the Project Explorer:
+
+![4 packages and 4 classes](/images/4packages4classes.png)
+
+Now edit the pom.xml file and add MySQL dependency:
+{% highlight xml %}
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.29</version>
+</dependency>
+{% endhighlight %}
+
+Connect to MYSQL databse in any way you like and run the following SQL script to create database and tables for our example:
+
+{% highlight sql %}
+CREATE DATABASE  IF NOT EXISTS `infsci2711_tutorial` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `infsci2711_tutorial`;
+
+DROP TABLE IF EXISTS `Person`;
+
+CREATE TABLE `Person` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(45) DEFAULT NULL,
+  `lastName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+{% endhighlight %}
+
+<br/>
+
+And now let's put some contents in those classes. First let's start with the *JdbcsUtil.java* (don't forget to change username and password to your mysql username and password):
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class JdbcUtil {
+	public static final String DEFAULT_HOST = "localhost";
+	
+	public static final int DEFAULT_PORT = 3306;
+	
+	public static final String DEFAULT_USER = "USERNAME"; //CHANGE TO YOUR MYSQL USER NAME
+	
+	public static final String DEFAULT_PASSWOD = "PASSWORD"; // CHANGE TO YOUR MYSQL PASSWORD
+	
+	public static final String DEFAULT_DATABASE = "infsci2711_tutorial";
+	
+	public static Connection getConnection() throws Exception {
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		return DriverManager.getConnection(getConnectionString(), DEFAULT_USER, DEFAULT_PASSWOD);
+	}
+	
+	public static String getConnectionString() {
+		return String.format("jdbc:mysql://%s:%d/%s", DEFAULT_HOST, DEFAULT_PORT, DEFAULT_DATABASE);
+	}
+}
+{% endhighlight %}
+
+<br/>
+
+Now the *PersonDBModel.java*:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.models;
+
+public class PersonDBModel {
+
+	private int id;
+	private String firstName;
+	private String lastName;
+	
+	public PersonDBModel() {
+		
+	}
+	
+	public PersonDBModel(final String firstName, final String lastName) {
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+	}
+	
+	public PersonDBModel(final int id, final String firstName, final String lastName) {
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
+}
+{% endhighlight %}
+
+<br/>
+Now the *PersonDAO.java*:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.pitt.sis.infsci2711.tutorial.models.PersonDBModel;
+import edu.pitt.sis.infsci2711.tutorial.utils.JdbcUtil;
+
+public class PersonDAO {
+
+	public static List<PersonDBModel> findAll() throws SQLException, Exception {
+		
+		try (Connection connection = JdbcUtil.getConnection()) {
+			String sql = "SELECT * FROM Person";
+			try (Statement statement = connection.createStatement()){
+				
+				ResultSet resultSet = statement.executeQuery(sql);
+				
+				List<PersonDBModel> result = new ArrayList<PersonDBModel>();
+				
+				while (resultSet.next()) {
+					result.add(new PersonDBModel(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3)));					 
+				}
+				
+				return result;
+			}
+		}
+		
+	}
+	
+	public static PersonDBModel findById(final int id) throws SQLException, Exception {
+		
+		try (Connection connection = JdbcUtil.getConnection()) {
+			String sql = "SELECT * FROM Person where id = " + id;
+			try (Statement statement = connection.createStatement()){
+				
+				ResultSet resultSet = statement.executeQuery(sql);
+				
+				while (resultSet.next()) {
+					return new PersonDBModel(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3));					 
+				}
+				
+				return null;
+			}
+		}
+		
+	}
+	
+	public static int save(final PersonDBModel person) throws SQLException, Exception {
+		
+		try (Connection connection = JdbcUtil.getConnection()) {
+			String sql = String.format("INSERT INTO Person (firstName, lastName) VALUES ('%s', '%s')", person.getFirstName(), person.getLastName());
+			try (Statement statement = connection.createStatement()){
+				
+				int res = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+				
+				ResultSet rs = statement.getGeneratedKeys();
+				if (rs.next()){
+					person.setId(rs.getInt(1));
+				}
+				
+				return res;
+			}
+		}
+		
+	}
+}
+{% endhighlight %}
+
+<br/>
+And now finally the *PersonService.java*:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.business;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import edu.pitt.sis.infsci2711.tutorial.dao.PersonDAO;
+import edu.pitt.sis.infsci2711.tutorial.models.PersonDBModel;
+
+public class PersonService {
+
+	public List<PersonDBModel> getAll() throws SQLException, Exception {
+		List<PersonDBModel> result = PersonDAO.findAll();
+		
+		return result;
+	}
+	
+	public PersonDBModel findById(final int id) throws SQLException, Exception {
+		PersonDBModel result = PersonDAO.findById(id);
+		
+		return result;
+	}
+	
+	public PersonDBModel add(final PersonDBModel person) throws SQLException, Exception {
+		PersonDAO.save(person);
+		
+		return person;
+	}
+}
+{% endhighlight %}
+
+<br/>
+<br/>
+
+Let's switch back to the *tutorialserverapi* project. Create new package in the *tutorialserverapi* project and name it *edu.pitt.sis.infsci2711.tutorial.viewModels*. Create *Person* class in that project with following content:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.viewModels;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Person {
+
+	private int id;
+	private String firstName;
+	private String lastName;
+	
+	public Person() {
+		
+	}
+	
+	public Person(final String firstName, final String lastName) {
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+	}
+	
+	public Person(final int id, final String firstName, final String lastName) {
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
+}
+{% endhighlight %}
+
+<br/>
+
+Create another class but in the .rest package and name it *PersonRestService" and populate it with the following content:
+
+{% highlight java %}
+package edu.pitt.sis.infsci2711.tutorial.rest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import edu.pitt.sis.infsci2711.tutorial.business.PersonService;
+import edu.pitt.sis.infsci2711.tutorial.models.PersonDBModel;
+import edu.pitt.sis.infsci2711.tutorial.viewModels.Person;
+
+@Path("Person/")
+public class PersonRestService {
+
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response allPersons() {
+		
+		PersonService personService = new PersonService();
+		
+		List<PersonDBModel> personsDB;
+		try {
+			personsDB = personService.getAll();
+		
+			List<Person> persons = convertDbToViewModel(personsDB);
+			
+			GenericEntity<List<Person>> entity = new GenericEntity<List<Person>>(persons) {};
+			
+			return Response.status(200).entity(entity).build();
+		} catch (Exception e) {
+			return Response.status(500).build();
+		}
+		
+	}
+	
+	@Path("{id}")
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response personById(@PathParam("id") final int id) {
+		
+		PersonService personService = new PersonService();
+		
+		try {
+			PersonDBModel personsDB = personService.findById(id);
+		 
+			if (personsDB != null) {
+				Person person = convertDbToViewModel(personsDB);
+			
+				return Response.status(200).entity(person).build();
+			}
+			return Response.status(404).entity("Person not found").build();
+		} catch (Exception e) {
+			return Response.status(500).build();
+		}
+		
+	}
+	
+	@PUT
+    @Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addPerson(final Person person) {
+		
+		PersonService personService = new PersonService();
+		
+		try {
+			PersonDBModel personsDB = personService.add(convertViewModelToDB(person));
+		
+			Person personInserted = convertDbToViewModel(personsDB);
+			
+			return Response.status(200).entity(personInserted).build();
+		} catch (Exception e) {
+			return Response.status(500).build();
+		}
+		
+	}
+
+	private PersonDBModel convertViewModelToDB(final Person person) {
+		return new PersonDBModel(person.getFirstName(), person.getLastName());
+	}
+
+	private List<Person> convertDbToViewModel(final List<PersonDBModel> personsDB) {
+		List<Person> result = new ArrayList<Person>();
+		for(PersonDBModel personDB : personsDB) {
+			result.add(convertDbToViewModel(personDB));
+		}
+		
+		return result;
+	}
+	
+	private Person convertDbToViewModel(final PersonDBModel personDB) {
+		return new Person(personDB.getId(), personDB.getFirstName(), personDB.getLastName());
+	}
+}
+{% endhighlight %}
+
+<br/>
+Here is how the project tree should look like:
+
+![4 packages and 4 classes](/images/twoProjectsAllClasses.png)
+
+Now start the TutorialServer and try this url in your browser `http://localhost:7654/Person`. This will send reques to our RESTful server and ask it to get all tuples from the Person table from MySQL.
+
+As the result you should see this in your browser: `[]`. That means that everything might have worked correctly, but at least is didn't fail. We just don't have any records in our database yet and that's why we recieve empty array.
+
+In addition to find all person tuples, our Person RESTful API also exposes functionality to add a persion and to find a person by id. 
+
+First let's try to find a person by id. Try this url: `http://localhost:7654/Person/123`. You should receive `Person not found` as the response.
+
+There are many ways to test the functionality to add new person, but we cannot simply type another url in the browser, because we need to do a POST/PUT request and send some data to the server. Fast and easy way to do that is to use browser extensions. For the Google Chrome browser you can use [REST Console](https://chrome.google.com/webstore/detail/rest-console/cokgbflfommojglbmbpenpphppikmonn?hl=en) and [RESTClient](https://addons.mozilla.org/en-US/firefox/addon/restclient/) for Firefox.
+
+Here is an example how to use REST Console in Chrome:
+
+Fill the Request URI, Accept and Request Method fields in the Target section:
+
+![4 packages and 4 classes](/images/restConsoleTarget.png)
+
+Fill the Content-Type and Raw Body fields in the Body section:
+
+![4 packages and 4 classes](/images/restConsoleBody.png)
+
+Click PUT button and see the Response section:
+
+![4 packages and 4 classes](/images/restConsoleResponse.png)
+
+<br/>
+Now if everything worked correctly, you can try `http://localhost:7654/Person` again. The result should be similar to `[{"firstName":"Evgeny","id":1,"lastName":"Karataev"}]`.
+
+We are done with the back end, now we need to build the UI.
+
+### Step 9: Building web page with HTML/Javascript/Knockoutjs
 
 
 
