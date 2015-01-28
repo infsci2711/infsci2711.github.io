@@ -5,7 +5,7 @@ description: > # this means to ignore newlines until "baseurl:"
   The website for the INFSCI 2711 Advanced Topics in Database Management class
   at School of Information Sciences at Univeristy of Pittsburgh.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://infsci2711.github.io/" # the base hostname & protocol for your site
+url: "http://infsci2711.github.io" # the base hostname & protocol for your site
 twitter_username: KarataevEvgeny
 github_username:  EvgenyKarataev
 
