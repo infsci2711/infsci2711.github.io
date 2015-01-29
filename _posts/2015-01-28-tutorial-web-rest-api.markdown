@@ -121,7 +121,7 @@ If everything worked correctly you should see a message in terminal or in consol
 
 ### Step 6: Add *MultiDBs-Utils* and *tutorialserver* as maven dependecny to *tutorialserverapi* project
 
-* Open *pom.xml* file in the *rutorialseverapi
+* Open *pom.xml* file in the *rutorialseverapi*
 * Find `<dependencies>` tag
 * Add following two dependencies:
 
