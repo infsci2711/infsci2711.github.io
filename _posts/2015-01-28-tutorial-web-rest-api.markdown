@@ -33,6 +33,12 @@ Each member need to clone the first three repositories (the website repo is opti
 
 Also clone `infsci2711\tutorial` ([https://github.com/infsci2711/tutorial](https://github.com/infsci2711/tutorial)) and `infsci2711\tutorial-WebClient` ([https://github.com/infsci2711/tutorial-WebClient](https://github.com/infsci2711/tutorial-WebClient)) repositories that will be used for this tutorial. Tutorial repositories resembel exactly the same structure as your team specific repositories, so you can play/mess around with tutorial before doing the actual work in your teams repos.
 
+---
+
+NOTE: if you cloned *MultiDBs-Utils* project before starting to read this tutorial and already did *mvn install*, then you might need to do *git pull/sync* and *mvn install* again.
+
+---
+
 ### Step 2: Maven (apparently it is optional)
 
 Java projects are managed by [Maven][Maven] and thus to build projects you need to use Maven. If you want to use Maven from command prompt (terminal), then follow installation instuctions on the Maven web site. However, as I learned it yesterday, you don't need to install Maven separately if you only going to use it via an IDE (you need an IDE with maven though).
