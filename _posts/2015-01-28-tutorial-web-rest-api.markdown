@@ -652,7 +652,7 @@ Here is how the project tree should look like:
 
 Now start the TutorialServer and try this url in your browser `http://localhost:7654/Person`. This will send reques to our RESTful server and ask it to get all tuples from the Person table from MySQL.
 
-As the result you should see this in your browser: `[]`. That means that everything might have worked correctly, but at least is didn't fail. We just don't have any records in our database yet and that's why we recieve empty array.
+As the result you should see this in your browser: `[]`. That means that everything might have worked correctly, but at least is didn't fail. We just don't have any records in our database yet and that's why we recieve an empty array.
 
 In addition to find all person tuples, our Person RESTful API also exposes functionality to add a persion and to find a person by id. 
 
@@ -662,15 +662,15 @@ There are many ways to test the functionality to add new person, but we cannot s
 
 Here is an example how to use REST Console in Chrome:
 
-Fill the Request URI, Accept and Request Method fields in the Target section:
+Fill the *Request URI*, *Accept* and *Request Method* fields in the *Target* section:
 
 ![4 packages and 4 classes](/images/restConsoleTarget.png)
 
-Fill the Content-Type and Raw Body fields in the Body section:
+Fill the *Content-Type* and *Raw Body* fields in the *Body* section:
 
 ![4 packages and 4 classes](/images/restConsoleBody.png)
 
-Click PUT button and see the Response section:
+Click the **PUT** button and see the *Response* section:
 
 ![4 packages and 4 classes](/images/restConsoleResponse.png)
 
@@ -681,9 +681,9 @@ We are done with the back end, now we need to build the UI.
 
 ### Step 9: Building web page with HTML/Javascript/Knockoutjs
 
-Go the folder where you cloned `infsci2711\tutorial-WebClient` to and created following directory structure ("/" means it is a folder, not a file):
+Go to the folder where you cloned `infsci2711\tutorial-WebClient` to and create following directory structure ("/" means it is a folder, not a file):
 <pre>
-tutorial-WebClient
+tutorial-WebClient/
 |-css/
 |-javascripts/
   |-knockout_models/
@@ -750,7 +750,7 @@ function PersonsViewModel() {
 				}
 			},
 			error: function(data) {
-				alert("Something went wrong while getting services' list. Please try again.");
+				alert("Something went wrong while getting persons list. Please try again.");
 			}
 		});
 	};
@@ -768,7 +768,7 @@ function PersonsViewModel() {
 				self.newPerson(new PersonViewModel());
 			},
 			error: function(data) {
-				alert("Something went wrong while getting services' list. Please try again.");
+				alert("Something went wrong while adding new person. Please try again.");
 			}
 		});
 	};
