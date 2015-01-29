@@ -18,7 +18,7 @@ Each team has 4 four repositories:
 
 Two of those repositories are specific (e.g. `infsci2711\MultiDBs-FilesAPIs2DBs-Server` and `infsci2711\MultiDBs-FilesAPIs2DBs-WebClient` for the *MultiDBs-FilesAPIs2DBs* team) for each team and the other two (`infsci2711\MultiDBs-Utils` and `infsci2711\infsci2711.github.io`) are shared between all teams.
 
-The purpose of each respository ("_FilesAPIs2DBs_" part of them name will be different for each team):
+The purpose of each respository ("_FilesAPIs2DBs_" part of the name will be different for each team):
 
 + `infsci2711\MultiDBs-FilesAPIs2DBs-Server` - repository where you put your Java code with RESTful APIs and business logic
 
