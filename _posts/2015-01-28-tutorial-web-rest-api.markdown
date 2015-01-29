@@ -34,8 +34,8 @@ Each member need to clone the first three repositories (the website repo is opti
 Also clone `infsci2711\tutorial` ([https://github.com/infsci2711/tutorial](https://github.com/infsci2711/tutorial)) and `infsci2711\tutorial-WebClient` ([https://github.com/infsci2711/tutorial-WebClient](https://github.com/infsci2711/tutorial-WebClient)) repositories that will be used for this tutorial. Tutorial repositories resembel exactly the same structure as your team specific repositories, so you can play/mess around with tutorial before doing the actual work in your teams repos.
 
 ---
-
-NOTE: if you cloned *MultiDBs-Utils* project before starting to read this tutorial and already did *mvn install*, then you might need to do *git pull/sync* and *mvn install* again.
+<br/>
+**NOTE**: if you cloned *MultiDBs-Utils* project before starting to read this tutorial and already did *mvn install*, then you might need to do *git pull/sync* and *mvn install* again.
 
 ---
 
