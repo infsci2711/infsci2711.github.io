@@ -35,7 +35,7 @@ Also clone `infsci2711\tutorial` ([https://github.com/infsci2711/tutorial](https
 
 ---
 <br/>
-**NOTE**: if you cloned *MultiDBs-Utils* project before starting to read this tutorial and already did *mvn install*, then you might need to do *git pull/sync* and *mvn install* again.
+**NOTE**: if you cloned *MultiDBs-Utils* project before starting to read this tutorial and already did *mvn install*, then you might need to do *git pull/sync* and *mvn install* again on the *MultiDBs-Utils* project.
 
 ---
 <br/>
