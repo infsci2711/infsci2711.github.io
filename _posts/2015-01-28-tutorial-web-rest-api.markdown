@@ -669,7 +669,184 @@ We are done with the back end, now we need to build the UI.
 
 ### Step 9: Building web page with HTML/Javascript/Knockoutjs
 
+Go the folder where you cloned `infsci2711\tutorial-WebClient` to and created following directory structure ("/" means it is a folder, not a file):
+<pre>
+tutorial-WebClient
+|-css/
+|-javascripts/
+  |-knockout_models/
+</pre>
 
+That is basically: create *css* and *javascripts* folder under the *tutorial-WebClient* folder and *knockout_models* folder under *javascripts* folder.
+
+
+Download [knockoutjs](http://knockoutjs.com/downloads/knockout-3.2.0.js) and put *knockout-3.2.0.js* in the *javascripts* folder.
+
+Download [jQuery](http://code.jquery.com/jquery-2.1.3.min.js) and put *jquery-2.1.3.min.js* in the *javascripts* folder.
+
+Download [bootstrap](https://github.com/twbs/bootstrap/releases/download/v3.3.2/bootstrap-3.3.2-dist.zip) and put *bootstrap.min.js* in the *javascripts* folder and *boostrap.min.css* in the *css* folder.
+
+Create text file (name it *index.html*) under the *tutorial-WebClient* folder and another text file (name it *personViewModel.js*) under the *knockout_models*
+
+This is how the folder structure shoud look like:
+<pre>
+tutorial-WebClient/
+|-css/
+	|- boostrap.min.css
+|-javascripts/
+  	|-knockout_models/
+  		|- personViewModel.js
+	|- bootstrap.min.js
+	|- jquery-2.1.3.min.js
+	|- knockout-3.2.0.js
+|- index.html
+</pre>
+
+Put the following content in the *personViewModel.js* file:
+
+{% highlight javascript %}
+var restBaseUrl = "http://localhost:7654/";
+
+function PersonViewModel(firstName, lastName) {
+	var self = this;
+
+	self.firstName = ko.observable(firstName);
+	self.lastName = ko.observable(lastName);
+}
+
+function PersonsViewModel() {
+	var self = this;
+
+	self.people = ko.observableArray();
+
+	self.newPerson = ko.observable(new PersonViewModel());
+
+	self.findAll = function() {
+		$.ajax({
+			url: restBaseUrl + "Person",
+			type: 'GET',
+			dataType: 'json',
+			contentType: "application/json",
+			crossDomain: true,
+			success: function(data) {
+				self.people.removeAll();
+
+				for (var i = 0; i < data.length; i++) {
+					var person = new PersonViewModel(data[i].firstName, data[i].lastName);
+                   
+					self.people.push(person);
+				}
+			},
+			error: function(data) {
+				alert("Something went wrong while getting services' list. Please try again.");
+			}
+		});
+	};
+
+	self.addPerson = function() {
+		$.ajax({
+			url: restBaseUrl + "Person",
+			type: 'PUT',
+			data: ko.toJSON(self.newPerson()),
+			dataType: 'json',
+			contentType: "application/json",
+			crossDomain: true,
+			success: function(data) {
+				self.people.push(new PersonViewModel(data.firstName, data.lastName));
+				self.newPerson(new PersonViewModel());
+			},
+			error: function(data) {
+				alert("Something went wrong while getting services' list. Please try again.");
+			}
+		});
+	};
+
+	self.findAll();
+}
+
+ko.applyBindings(new PersonsViewModel(), $("#personsContainer")[0]);
+{% endhighlight %}
+
+<br/>
+
+And the following content in the *index.html* file:
+
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>INFSCI 2711 Web Tutorial</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body style="margin: 60px;">
+	<div class="row">
+
+		<div class="col-md-12">
+
+			<div class="page-header">
+			  <h1>This is INFSCI 2711 Tutorial on Web Applicaiton with RESTful API <br/><small>(with twitter bootstrap and knockouy.js)</small></h1>
+			</div>
+
+			<div id="personsContainer">
+				<h3>
+		        	There are <span data-bind="text: people().length"></span> persons in our databases.
+		        	<button class="btn btn-default" data-bind="click: findAll">Refresh</button>
+		    	</h3> 
+
+		    	<form class="form-inline">
+					<!-- ko with: newPerson -->
+
+					<input class="form-control" placeholder="Enter first name" data-bind="textInput: firstName">
+					<input class="form-control" placeholder="Enter last name" data-bind="textInput: lastName">
+
+					<!-- /ko -->
+
+					<button type="submit" class="btn btn-default" data-bind="click: addPerson">Add Person</button>
+				</form>
+
+		    	<!-- ko if: people().length > 0 -->
+
+		    	<table class="table table-striped table-hover">
+		            <thead>
+		                <tr>  
+		                	<th>#</th>
+		                    <th>First Name</th>
+		                    <th>Last Name</th>                         
+		                </tr> 
+		            </thead> 
+		            <tbody data-bind="foreach: people">
+		                <tr>  
+		                	<td data-bind="text: $index"></td> 
+		                    <td data-bind="text: firstName"></td>  
+		                    <td data-bind="text: lastName"></td>
+		                </tr>     
+		            </tbody>
+		        </table>  
+
+		        <!-- /ko -->
+
+			</div>
+
+		</div>
+
+	</div>
+	
+    <script type="text/javascript" src="javascripts/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascripts/knockout-3.2.0.js"></script>
+    <script type="text/javascript" src="javascripts/knockout_models/personViewModel.js"></script>
+</body>
+</html>
+{% endhighlight %}
+
+Run the *TutorialServer* and then open *index.html* file in your browser. You should see something similar to this:
+
+![Html Page](/images/htmlPage.png)
+
+To understand how the UI works you only need to understand the *knockout.js*. For that go over their [tutorial](http://learn.knockoutjs.com/#/?tutorial=intro). All other parts of the web page are simple.
 
 [Jersey]:	https://jersey.java.net/
 [Jetty]:	http://eclipse.org/jetty/
