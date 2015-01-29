@@ -858,6 +858,8 @@ Run the *TutorialServer* and then open *index.html* file in your browser. You sh
 
 ![Html Page](/images/htmlPage.png)
 
+Try to play with it, e.g. add new person, click Refresh button.
+
 To understand how the UI works you only need to understand the *knockout.js*. For that go over their [tutorial](http://learn.knockoutjs.com/#/?tutorial=intro). All other parts of the web page are simple.
 
 [Jersey]:	https://jersey.java.net/
