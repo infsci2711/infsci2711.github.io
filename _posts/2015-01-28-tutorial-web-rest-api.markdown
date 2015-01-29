@@ -46,7 +46,7 @@ Java projects are managed by [Maven][Maven] and thus to build projects you need 
 
 ### Step 3: IDE (with maven plugin)
 
-You can use any IDE you want. I am going to show all examples with [Eclipse][Eclipse]. In any case, I believe, you IDE need to "understand" Maven projects. New version of [Eclipse][Eclipse] (after Kepler) and [NetBeans](https://netbeans.org/) have Maven plugin by default (I don't know about the [IntelliJ IDEA](https://www.jetbrains.com/idea/), but I am sure the situation is the same). If you have older version of Eclipse, for example, you can install [m2eclipse](http://eclipse.org/m2e/) plugin separately.
+You can use any IDE you want. I am going to show all examples with [Eclipse][Eclipse]. In any case, I believe, your IDE need to "understand" Maven projects. New version of [Eclipse][Eclipse] (after Kepler) and [NetBeans](https://netbeans.org/) have Maven plugin by default (I don't know about the [IntelliJ IDEA](https://www.jetbrains.com/idea/), but I am sure the situation is the same). If you have older version of Eclipse, for example, you can install [m2eclipse](http://eclipse.org/m2e/) plugin separately.
 
 ### Step 4: Import projects to IDE
 
