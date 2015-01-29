@@ -29,9 +29,9 @@ The purpose of each respository ("_FilesAPIs2DBs_" part of the name will be diff
 + `infsci2711\infsci2711.github.io` - repository with the source code of the class website
 
 
-Each member need to clone the first three repositories (the website repo is optional and might be needed if you will need to contribute to the class website). You will use your project specific repositories later when you work on your project, for this demo only need the `infsci2711\MultiDBs-Utils` repository.
+Each member need to clone the first three repositories (the website repo is optional and might be needed if you will need to contribute to the class website). You will use your project specific repositories later when you work on your project, for this demo you only need the `infsci2711\MultiDBs-Utils` repository.
 
-Also clone `infsci2711\tutorial` ([https://github.com/infsci2711/tutorial](https://github.com/infsci2711/tutorial)) and `infsci2711\tutorial-WebClient` ([https://github.com/infsci2711/tutorial-WebClient](https://github.com/infsci2711/tutorial-WebClient)) repositories that will be used for this tutorial. Tutorial repositories resembel exactly the same structure as your team specific repositories, so you can play/mess around with tutorial before doing the actual work in your teams repos.
+Also clone `infsci2711\tutorial` ([https://github.com/infsci2711/tutorial](https://github.com/infsci2711/tutorial)) and `infsci2711\tutorial-WebClient` ([https://github.com/infsci2711/tutorial-WebClient](https://github.com/infsci2711/tutorial-WebClient)) repositories that will be used for this tutorial. Tutorial repositories resemble exactly the same structure as your team specific repositories, so you can play/mess around with tutorial before doing the actual work in your teams repos.
 
 ---
 <br/>
