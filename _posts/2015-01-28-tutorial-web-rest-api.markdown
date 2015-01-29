@@ -161,6 +161,11 @@ You should have project structure like this:
 
 ![API project with 2 packages and 2 classes](/images/apiprojectWith2Pack2Classes.png)
 
+---
+<br/>
+NOTE, CORRECTION: It is better to have prefix for the packages in the *tutorialserverapi* as *edu.pitt.sis.infsci2711.tutorialapi.* (see the added "api").
+---
+
 Edit *TutorialServer.java* file to make it like this:
 
 {% highlight java %}
@@ -206,7 +211,7 @@ public class DemoRestApi {
 }
 {% endhighlight %}
 
-In short the code above defines a root resource accesible with path "Demo" and a sub-resource accesible with path "helloWord" whic his relative to the root path. The sub resource also annoted with @GET that designates that the resource is hoing to process HTTP GET requests and produce representation in JSON format. For more details please read [Jersey docs](https://jersey.java.net/documentation/latest/index.html) and especially [Chapter 3](https://jersey.java.net/documentation/latest/jaxrs-resources.html).
+In short the code above defines a root resource accesible with path "Demo" and a sub-resource accesible with path "helloWord" which his relative to the root path. The sub resource also annotated with @GET that designates that the resource is going to process HTTP GET requests and produce representation in JSON format. For more details please read [Jersey docs](https://jersey.java.net/documentation/latest/index.html) and especially [Chapter 3](https://jersey.java.net/documentation/latest/jaxrs-resources.html).
 
 Now we can finally try to run our TutorialServer: right click on the *TutorialServer.java* in the *Project Explorer* and select *Run As -> Java Application*.
 
@@ -260,7 +265,7 @@ Now edit the pom.xml file and add MySQL dependency:
 </dependency>
 {% endhighlight %}
 
-Connect to MYSQL databse in any way you like and run the following SQL script to create database and tables for our example:
+Connect to MySQL databse in any way you like and run the following SQL script to create a database and a table for our example:
 
 {% highlight sql %}
 CREATE DATABASE  IF NOT EXISTS `infsci2711_tutorial` /*!40100 DEFAULT CHARACTER SET latin1 */;
@@ -534,7 +539,7 @@ public class Person {
 
 <br/>
 
-Create another class but in the .rest package and name it *PersonRestService" and populate it with the following content:
+Create another class but in the *edu.pitt.sis.infsci2711.tutorial.rest* package and name it "*PersonRestService*" and populate it with the following content:
 
 {% highlight java %}
 package edu.pitt.sis.infsci2711.tutorial.rest;
