@@ -148,7 +148,7 @@ Let's work on the *tutorialserverapi* project first.
 Right click on the *src/main/java* in the Project Explorer and select *New -> Package* to create a new package. In the *New Java Package* dialog enter the name of the new package as *edu.pitt.sis.infsci2711.tutorial*. 
 
 ---
-
+<br/>
 **NOTE**: all packages in your projects should have *edu.pitt.sis.infsci2711.multidbs.* prefix followed by your project name. E.g., all packages in the *MultiDBs-FilesAPIs2DBs* project should have this beginning: *edu.pitt.sis.infsci2711.multidbs.filesapis2dbs*
 
 ---
@@ -177,7 +177,7 @@ public class TutorialServer {
 }
 {% endhighlight %}
 
-What the above code will is following:
+What the above code will do is following:
 
 * create an instance of *JerseyJettyServer* class that is defined in the Utils project. The *JerseyJettyServer* starts an embedded Jetty server that listens on the provided port (7654) and will look for the REST API classes in the *edu.pitt.sis.infsci2711.tutorial.rest* package (we will create a demo API later)
 
