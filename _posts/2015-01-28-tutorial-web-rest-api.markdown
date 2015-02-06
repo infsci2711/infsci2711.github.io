@@ -24,7 +24,7 @@ The purpose of each respository ("_FilesAPIs2DBs_" part of the name will be diff
 
 + `infsci2711\MultiDBs-FilesAPIs2DBs-WebClient` - repostiry where you put your web client code (html/javascript/css/etc)
 
-+ `infsci2711\MultiDBs-Utils` (https://github.com/infsci2711/MultiDBs-Utils) - repository shared between all teams which contains all utility classes that might be useful for more than one team
++ `infsci2711\MultiDBs-Utils` ([https://github.com/infsci2711/MultiDBs-Utils](https://github.com/infsci2711/MultiDBs-Utils)) - repository shared between all teams which contains all utility classes that might be useful for more than one team
 
 + `infsci2711\infsci2711.github.io` - repository with the source code of the class website
 
