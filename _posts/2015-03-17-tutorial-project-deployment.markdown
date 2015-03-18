@@ -87,4 +87,6 @@ sudo rm -R html
 sudo ln -sv /opt/project/tutorial-WebClient html
 {% endhighlight %}
 
-Note for the above code to work, nginx need to be configured to follow symlink (for it was working out of the box, let me know if it doesn't work for you). Also in the above commands */opt/project/tutorial-WebClient* points to the client code that I cloned from github.
+Note for the above code to work, nginx need to be configured to follow symlink (for it was working out of the box, let me know if it doesn't work for you). Also in the above commands */opt/project/tutorial-WebClient* points to the client code that I cloned from github. Also, you might need to make *project* folder searchable (e.g. give x permission with "chmod 755 project" command)
+
+Even though we have not talked about how to start the server, by now you should be able to check if UI "works" (at least shows correct page without back end functionality). Simply type your server IP address in the browser. You should see your UI.
