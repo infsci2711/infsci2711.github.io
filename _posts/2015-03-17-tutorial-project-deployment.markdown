@@ -46,3 +46,45 @@ sudo apt-get install nginx
 {% endhighlight %}
 
 As I menioned in the class, each project would need to create a *startup.sh* scrip file that should bring the "freash" OS installation to the state to be able to run your project without any other manual work. So I suggest you to start writing the script as soon as possible, so you will not forget anything. 
+
+### Getting the source code to the server
+
+*You should never copy any source code or any script file manually to the server. Everything important should go via github!* 
+
+To get your code from github follow the following steps:
+
+1. Create project folder under the /opt folder:
+
+{% highlight xml %}
+cd /opt
+sudo mkdir project
+cd project
+{% endhighlight %}
+
+2. Clone all required github repos. For example, to clone the tutorial project following command will need to be exectued:
+
+{% highlight xml %}
+sudo git clone https://github.com/infsci2711/tutorial.git
+{% endhighlight %}
+
+You can get your project git HTTPS URL on the git hub web site.
+
+The server code will be served directly from the *project* folder with Jetty web server, however to server "static" Web UI (Client code) you have several options:
+a. To serve it with the *nginx* (this will be used in this tutorial)
+b. To serve it together with the server code with Jetty (you need to figure out by yourself how to do that if you want to)
+c. To server with any other web servers (e.g. Apache, tomcat, etc. (you need to figure out by yourself how to do that if you want to))
+
+You can clone the Client code into the *project* directory as well however eventually all client code (e.g. html, js, css files) need to be under nginx root web folder which is */usr/share/nginx/html*). There are several ways to do that:
+a. Create symlink to the client code in the project folder
+b. Copy client code from the project folder to the nginx folder
+c. git clone your client code directly in the nginx folder
+
+Here is the example how to make it work with the symlink:
+
+{% highlight xml %}
+cd /usr/share/nginx
+sudo rm -R html
+sudo ln -sv /opt/project/tutorial-WebClient html
+{% endhighlight %}
+
+Note for the above code to work, nginx need to be configured to follow symlink (for it was working out of the box, let me know if it doesn't work for you). Also in the above commands */opt/project/tutorial-WebClient* points to the client code that I cloned from github.
