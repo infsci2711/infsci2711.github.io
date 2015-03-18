@@ -87,6 +87,19 @@ sudo rm -R html
 sudo ln -sv /opt/project/tutorial-WebClient html
 {% endhighlight %}
 
-Note for the above code to work, nginx need to be configured to follow symlink (for it was working out of the box, let me know if it doesn't work for you). Also in the above commands */opt/project/tutorial-WebClient* points to the client code that I cloned from github. Also, you might need to make *project* folder searchable (e.g. give x permission with "chmod 755 project" command)
+Note for the above code to work, nginx need to be configured to follow symlink (for it was working out of the box, let me know if it doesn't work for you). Also in the above commands */opt/project/tutorial-WebClient* points to the client code that I cloned from github. You would need to replace it for your project. Also, you might need to make *project* folder searchable (e.g. give x permission with "chmod 755 project" command)
 
 Even though we have not talked about how to start the server, by now you should be able to check if UI "works" (at least shows correct page without back end functionality). Simply type your server IP address in the browser. You should see your UI.
+
+
+
+### Getting code updates after new commits
+
+After you do more commits to github with new functionality, you would need to "redploy" your project. 
+
+Connect to the server, stop your sever project (Jetty server) by running following command:
+
+Then go to each repository folder *git pull*
+
+Start your server project (Jetty server).
+P.S.: You might need to restart any other servers/services if you use any.
