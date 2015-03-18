@@ -24,7 +24,25 @@ Then enter your password (note no characters will be printed while you are enter
 
 #### From Windows machine
 If you have Windows OS, then you need to use [PuTTy][Putty] software. Simply download it and run it. In the opened window enter server IP in the host area and leave port 22 as default. You can also save the setting for future use if you give it a name and click save button. See the picture below for the example:
+
 ![PuTTy Screen Shot](/images/puttyScreenShot.png)
 
+Then click open and in the opened window enter your username, hit enter, then enter your password.
 
 [Putty]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html 
+
+### Preparing Ubuntu
+
+When you log in first time, the server has "fresh" installation of Ubuntu OS, meaning that no additional software (such as Maven, Git, etc.) is installed. Everyone in one team share the same computer, so all the software that you need for your project should only be installed once (you need to talk to each other and organize this activity).
+
+Here are several example of what you might need to install (you can simply copy and past line by line to the terminal):
+
+{% highlight xml %}
+sudo apt-get install maven
+sudo apt-get install git
+sudo apt-get install openjdk-7-jdk
+sudo apt-get install mysql-server
+sudo apt-get install nginx
+{% endhighlight %}
+
+As I menioned in the class, each project would need to create a *startup.sh* scrip file that should bring the "freash" OS installation to the state to be able to run your project without any other manual work. So I suggest you to start writing the script as soon as possible, so you will not forget anything. 
