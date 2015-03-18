@@ -93,14 +93,79 @@ Note for the above code to work, nginx need to be configured to follow symlink (
 
 Even though we have not talked about how to start the server, by now you should be able to check if UI "works" (at least shows correct page without back end functionality). Simply type your server IP address in the browser. You should see your UI.
 
+The only change that I needed to make to the UI code is in the *personViewModel.js* file (changed the restBaseUrl to point to the server IP):
+{% highlight javascript %}
+var restBaseUrl = "http://52.0.4.98:7654/";
+{% endhighlight %}
+
 Here is the screen shot of the projects folder that I have on the server for this example:
 
 ![Project Folder on AWS](/images/projectFolderonAWS.png)
 
 ### Building and Starting your server code
 
-Once you get all the required code, you need to build it first. Start with those projects that are independent. For example, the 
+There is one thing that you need to add to your severapi project (in my case it was tutorialapi project) pom file. One person from each team needs to add the following to the project section of the pom file:
 
+{% highlight xml %}
+<build>
+		<plugins>
+					
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+				<!-- nothing here -->
+			</plugin>
+			
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <version>2.1</version>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                    <configuration>
+	                        <transformers>
+	                        <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
+	                            <transformer
+	                                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+	                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+				                	<mainClass>edu.pitt.sis.infsci2711.tutorial.TutorialServer</mainClass>
+				                </transformer>
+	                        </transformers> 
+	                        <filters>
+	                            <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
+	                            <filter>
+	                                <artifact>*:*</artifact>
+	                                <excludes>
+	                                    <exclude>META-INF/*.SF</exclude>
+	                                    <exclude>META-INF/*.DSA</exclude>
+	                                    <exclude>META-INF/*.RSA</exclude>
+	                                </excludes>
+	                            </filter>
+	                        </filters>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+  
+		</plugins>
+	</build>
+{% endhighlight %}
+
+Don't forget to replace *<mainClass>edu.pitt.sis.infsci2711.tutorial.TutorialServer</mainClass>* with your main class.
+
+Once you get all the required code, you need to build it first. Start with those projects that are independent. For example, the I would start with *MultiDBs-Utils* since it doesn't depend on any other projects. To build the project, run mvn instal like this:
+
+{% highlight xml %}
+cd MultiDBs-Utils
+mvn install
+{% endhighlight %}
+
+Do the same for all projects you have.
 
 ### Getting code updates after new commits
 
@@ -108,7 +173,7 @@ After you do more commits to github with new functionality, you would need to "r
 
 Connect to the server, stop your sever project (Jetty server) by running following command:
 
-Then go to each repository folder *git pull*
+Then go to each repository folder *git pull*.
 
 Start your server project (Jetty server).
 P.S.: You might need to restart any other servers/services if you use any.
