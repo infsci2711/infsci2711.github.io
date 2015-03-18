@@ -45,7 +45,7 @@ sudo apt-get install mysql-server
 sudo apt-get install nginx
 {% endhighlight %}
 
-As I menioned in the class, each project would need to create a *startup.sh* scrip file that should bring the "freash" OS installation to the state to be able to run your project without any other manual work. So I suggest you to start writing the script as soon as possible, so you will not forget anything. 
+As I menioned in the class, each project would need to create a *startup.sh* scrip file that should bring the "fresh" OS installation to the state to be able to run your project without any other manual work. So I suggest you to start writing the script as soon as possible, so you will not forget anything. 
 
 Also the *startup.sh* should have any other required operations scripted. E.g. creation of the database and tables if your project needs any. You can look at my example [here](https://github.com/infsci2711/tutorial/blob/master/setup.sh).
 
