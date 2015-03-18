@@ -47,6 +47,8 @@ sudo apt-get install nginx
 
 As I menioned in the class, each project would need to create a *startup.sh* scrip file that should bring the "freash" OS installation to the state to be able to run your project without any other manual work. So I suggest you to start writing the script as soon as possible, so you will not forget anything. 
 
+Also the *startup.sh* should have any other required operations scripted. E.g. creation of the database and tables if your project needs any. You can look at my example [here](https://github.com/infsci2711/tutorial/blob/master/setup.sh).
+
 ### Getting the source code to the server
 
 *You should never copy any source code or any script file manually to the server. Everything important should go via github!* 
@@ -91,6 +93,13 @@ Note for the above code to work, nginx need to be configured to follow symlink (
 
 Even though we have not talked about how to start the server, by now you should be able to check if UI "works" (at least shows correct page without back end functionality). Simply type your server IP address in the browser. You should see your UI.
 
+Here is the screen shot of the projects folder that I have on the server for this example:
+
+![Project Folder on AWS](/images/projectFolderonAWS.png)
+
+### Building and Starting your server code
+
+Once you get all the required code, you need to build it first. Start with those projects that are independent. For example, the 
 
 
 ### Getting code updates after new commits
