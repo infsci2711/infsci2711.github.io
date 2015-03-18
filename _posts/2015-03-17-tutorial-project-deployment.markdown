@@ -108,55 +108,56 @@ There is one thing that you need to add to your severapi project (in my case it 
 
 {% highlight xml %}
 <build>
-		<plugins>
-					
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
-				<!-- nothing here -->
-			</plugin>
-			
-			<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-shade-plugin</artifactId>
-	            <version>2.1</version>
-	            <executions>
-	                <execution>
-	                    <phase>package</phase>
-	                    <goals>
-	                        <goal>shade</goal>
-	                    </goals>
-	                    <configuration>
-	                        <transformers>
-	                        <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
-	                            <transformer
-	                                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-	                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-				                	<mainClass>edu.pitt.sis.infsci2711.tutorial.TutorialServer</mainClass>
-				                </transformer>
-	                        </transformers> 
-	                        <filters>
-	                            <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
-	                            <filter>
-	                                <artifact>*:*</artifact>
-	                                <excludes>
-	                                    <exclude>META-INF/*.SF</exclude>
-	                                    <exclude>META-INF/*.DSA</exclude>
-	                                    <exclude>META-INF/*.RSA</exclude>
-	                                </excludes>
-	                            </filter>
-	                        </filters>
-	                    </configuration>
-	                </execution>
-	            </executions>
-	        </plugin>
-  
-		</plugins>
-	</build>
+	<plugins>
+				
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>2.2</version>
+			<!-- nothing here -->
+		</plugin>
+		
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>2.1</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                        <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
+                            <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+			                	<mainClass>edu.pitt.sis.infsci2711.tutorial.TutorialServer</mainClass>
+			                </transformer>
+                        </transformers> 
+                        <filters>
+                            <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+	</plugins>
+</build>
 {% endhighlight %}
 
 Don't forget to replace *<mainClass>edu.pitt.sis.infsci2711.tutorial.TutorialServer</mainClass>* with your main class.
+Note: do that on the local machine and then commit to github. To get your latest commit to the server, simply use *git pull* command.
 
 Once you get all the required code, you need to build it first. Start with those projects that are independent. For example, the I would start with *MultiDBs-Utils* since it doesn't depend on any other projects. To build the project, run mvn instal like this:
 
@@ -166,6 +167,23 @@ mvn install
 {% endhighlight %}
 
 Do the same for all projects you have.
+
+Once you run the *mvn install* command on the sever project, go to the *serverapi/target* folder. There should be two jar files. If you see only one jar file, then something went wrong.
+
+If you do see two jar file, then run the following command to start your server:
+
+{% highlight xml %}
+nohup java -jar tutorialserverapi-0.1-SNAPSHOT.jar > log.out 2> error.log < /dev/null &
+{% endhighlight %}
+
+Replace *tutorialserverapi-0.1-SNAPSHOT.jar* with your jar name. To test if the server is running, try to run:
+{% highlight xml %}
+lsof -i:7654
+{% endhighlight %}
+
+Make sure in your code the server is listening to the port 7654, since only this port and port 80 are opented to the outside world.
+
+If you think that everything is working, try to test it in your browser. For the tutorial project, I would simply type sever IP address in the browser.
 
 ### Getting code updates after new commits
 
