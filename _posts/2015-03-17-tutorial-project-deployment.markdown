@@ -13,12 +13,16 @@ Each group will have a project dedicated Ubuntu server running somewhere on the 
 
 ### Logging into the server
 
-If you have mac or you have some linux OS (e.g. Ubuntu) then you would need to use terminal to connect to the server. Simply open the terminal and type
+#### From Max/Linux machine
+If you have mac or you have some linux OS (e.g. Ubuntu) then you would need to use terminal to connect to the server. Simply open the terminal and type:
 {% highlight xml %}
 ssh YOURUSERNAME@IP
 {% endhighlight %}
 where YOURUSERNAME is your user name that you recieve in email and the IP is the IP address of the server.
 
+Then enter your password (note no characters will be printed while you are entering your password) and you should be logged into the server.
+
+#### From Windows machine
 If you have Windows OS, then you need to use [PuTTy][Putty]
 
 [Putty]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html 
