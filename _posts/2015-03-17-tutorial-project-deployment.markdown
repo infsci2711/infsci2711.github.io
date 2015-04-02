@@ -2,7 +2,7 @@
 layout: post
 title:  "Tutorial on how to diploy projects to AWS Ubuntu servers"
 date:   2015-03-17 21:57:22
-categories: tutorial
+categories: tutorialPosts
 ---
 
 ### Intro

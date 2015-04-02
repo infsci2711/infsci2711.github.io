@@ -2,7 +2,7 @@
 layout: post
 title:  "Tutorial on simple Web application with RESTful API on JAVA"
 date:   2015-01-28 10:57:22
-categories: tutorial
+categories: tutorialPosts
 ---
 
 ### Intro
