@@ -2,22 +2,76 @@
 layout: default
 ---
 
-<div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+<!-- <div class="home"> -->
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+<div class="container">
+  <div class="row">
+        <div class="col-md-3" id="leftCol">
+              
+          <ul class="nav nav-stacked" id="sidebar">
+            <li><a href="#about">About</a></li>
+            <li><a href="#project">Project</a></li>
+            <li><a href="#posts">Posts</a></li>
+          </ul>
+              
+          </div>  
+          <div class="col-md-9" id="mainCol">
+              
+                <br>
+              
+                <h2 id="about">About</h2>
+                This is the website for the INFSCI 2711: Advanced Topics in Database Management class at <a href="http://ischool.pitt.edu/">School of Information Sciences</a>, <a href="http://www.pitt.edu">University of Pittsburgh</a>.
+                
+                <hr>
+                
+              
+                <h2 id="project">Project</h2>
+                <p>
+                  Will be added soon
+                </p>
+               
+                <hr>
+              
+                <h2 id="posts">Blog Posts</h2>
+               
+                <ul class="post-list">
+                {% for post in site.posts %}
+                  <li>
+                    <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+                    <h2>
+                      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                    </h2>
+                  </li>
+                {% endfor %}
+              </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
+              <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+              
+                <hr>
+              
+              
+                
+          </div> 
+    </div>
 </div>
+
+
+<script>
+  $('#sidebar').affix({
+        offset: {
+          top: 245
+        }
+  });
+
+  var $body   = $(document.body);
+  var navHeight = $('.navbar').outerHeight(true) + 10;
+
+  $body.scrollspy({
+    target: '#leftCol',
+    offset: navHeight
+  });
+</script>
+
+<!-- </div> -->
