@@ -247,7 +247,69 @@ layout: default
 
                 <div>Icons made by <a href="http://www.flaticon.com/authors/icons8" title="Icons8">Icons8</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 
-                <p></p>
+                <h4>Use Cases</h4>
+                
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Use Case #1
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        Registering a datasource in MetaStore:
+                        <ul>
+                          <li>Open MetaStore page, enter connection info to a MySQL database, title, description</li>
+                          <li>MetaStore then should send REST request to PrestoDB and keyword search groups telling them that a new datasource was added</li>
+                          <li>PrestoDB and keyword search groups need to take appropriate actions (e.g. create new PrestoDB catalog, update indexes, etc.)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                      <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Use Case #2
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                      <div class="panel-body">
+                        Upload SPSS file and have it registered as a new datasource:
+                        <ul>
+                          <li>Let user upload SPSS file and some metadata (e.g. title, description)</li>
+                          <li>Process and store SPSS file as a new database</li>
+                          <li>Send REST request to MetaStore to register the database as a new datasource (note the database physically will not be moved to MetaStore) </li>
+                          <li>MetaStore then do what it does after manual datasource registration (send REST requests to other related groups)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                      <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Use Case #3
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                      <div class="panel-body">
+                        Get dataset from Dataverse via API and have it registered as a new datasource:
+                        <ul>
+                          <li>Let user enter datasets identifier</li>
+                          <li>Talk to Dataverse API and get dataset’s metadata and data and store it on local database</li>
+                          <li>Send REST request to MetaStore to register the database as a new datasource (note the database physically will not be moved to MetaStore)</li>
+                          <li>MetaStore then do what it does after manual datasource registration (send REST requests to other related groups)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                
                 <hr>
               
