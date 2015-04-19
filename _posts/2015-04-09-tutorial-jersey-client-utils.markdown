@@ -43,7 +43,7 @@ Assuming we have the following properties file:
 port = 7654
 
 # the IP and Port of the other project REST API
-metastore.rest.base = 54.152.26.131:7654
+metastore.rest.base = http://54.152.26.131:7654
 #example of the a concrete exposed resources
 metastore.rest.getAllDatasources = /datasources
 metastore.rest.addDatasource = /datasources/add
